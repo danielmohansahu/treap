@@ -19,7 +19,7 @@ class TestTreap(unittest.TestCase):
 
         # test iteration
         for node in treap:
-            self.fail("Iteration over Treap failed; not empty as expected.")
+            self.assertFalse(True, "Iteration over Treap failed; not empty as expected.")
 
     def test_insert(self):
         # test insertion with a known data set
@@ -28,11 +28,11 @@ class TestTreap(unittest.TestCase):
         treap = Treap()
 
         # insert a handful of known Nodes
-        treap.insert("a", 1)
-        treap.insert("b", 2)
+        treap.insert("a", 5)
+        treap.insert("b", 4)
         treap.insert("c", 3)
-        treap.insert("d", 4)
-        treap.insert("e", 5)
+        treap.insert("d", 2)
+        treap.insert("e", 1)
 
         # make sure there are 5 elements in the treap now
         self.assertEqual(len(treap), 5)
@@ -87,7 +87,7 @@ class TestTreap(unittest.TestCase):
 
         # make sure we can find all the keys in the treap
         for key in keys:
-            self.assertTrue(treap.find(key))
+            self.assertTrue(treap.search(key))
 
     def is_ordered(self, treap: Treap) -> None:
         """ Utility to check that every node in the given Treap satisfies the following:
@@ -99,15 +99,18 @@ class TestTreap(unittest.TestCase):
         """
     
         # iterate through all nodes in the heap
-        for node in treap:
-            # check all three of parent, left, and right. All are optional, technically
-    
-            if node.parent:
+        for i,node in enumerate(treap):
+            # check parent if not root
+            if i != 0:
                 self.assertLessEqual(node.priority, node.parent.priority)
+
+            # check all left and right. All are optional, technically
             if node.left:
                 self.assertGreater(node.key, node.left.key)
             if node.right:
                 self.asserLess(node.key, node.right.key)
+
+
 
     def get_random_treap(self) -> Tuple[Treap, set]:
         """ Utility method to randomly generate a Treap"
