@@ -10,12 +10,14 @@ class Node:
     # member variables
     key: str
     priority: Union[int, None]
-    parent: Union["Node", None]
-    left: Union["Node", None]
-    right: Union["Node", None]
+    parent: Union["Node", None] = None
+    left: Union["Node", None] = None
+    right: Union["Node", None] = None
 
     def __init__(self,
                  key: str,
                  priority: Union[int, None] = None) -> None:
-        pass
+
+        self.key = key
+        self.priority = priority
 

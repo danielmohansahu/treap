@@ -17,6 +17,7 @@ class Treap:
     def __init__(self) -> None:
         # default instantiation creates an empty treap
         self._nodes = []
+        self._used_keys = set()
 
     def insert(self, key: str, priority: Union[int, None] = None) -> None:
         """ Insert a new key (and optionally a priority).
@@ -25,13 +26,21 @@ class Treap:
             key: The string key of the new node.
             priority: An optional integer value; if None this is randomly generated.
         """
+        # make sure this key hasn't been used previously
+        if key in self._used_keys:
+            raise AssertionError("Key {} already in use.".format(key))
+
         # make sure the given priority is good or generate our own    
         if priority is not None and priority < 0:
             raise AssertionError("Priority must be greater than zero.")
         else:
             priority = random.randint(0, 1000)
    
-        # @TODO actually insert
+        # @TODO actually insert; for now just constructing / appending
+        node = Node(key, priority)
+
+        self._used_keys.add(key)
+        self._nodes.append(node)
 
     def search(self, key: str) -> bool:
         """ Search for the given key in the treap and return True if found.
