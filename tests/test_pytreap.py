@@ -47,16 +47,15 @@ class TestTreap(unittest.TestCase):
         treap = Treap()
 
         # try to insert a negative value (should fail)
-        self.assertRaises(AssertionError,
-                          treap.insert("a", -1),
-                          "Allowed insertion of a negative priority")
+        with self.assertRaises(AssertionError, msg="Allowed insertion of a negative priority"):
+            treap.insert("a", -1)
 
     def test_random_insert(self):
         # make sure the public API method 'insert' behaves as expected
         #  for a variety of randomized inputs
 
         # all the checks are embedded in this method
-        treap, keys = get_random_treap()
+        treap, keys = self.get_random_treap()
 
     def test_search(self):
         # test search with a known data set
@@ -84,7 +83,7 @@ class TestTreap(unittest.TestCase):
         #  for a variety of randomized inputs
 
         # create a randomly populated ordered treap
-        treap, keys = get_random_treap()
+        treap, keys = self.get_random_treap()
 
         # make sure we can find all the keys in the treap
         for key in keys:
@@ -127,9 +126,8 @@ class TestTreap(unittest.TestCase):
 
             # if key is already used, make sure this causes a failure condition
             if key in used_keys:
-                self.assertRaises(AssertionError,
-                                  treap.insert(key), 
-                                  "Failed to raise an error with duplicate key insertion.")
+                with self.assertRaises(AssertionError, msg="Failed to raise an error with duplicate key insertion."):
+                    treap.insert(key) 
             else:
                 # add it to the list and insert this new value
                 used_keys = used_keys.union(key)
