@@ -110,7 +110,7 @@ class TestTreap(unittest.TestCase):
             if node.right:
                 self.asserLess(node.key, node.right.key)
 
-    def get_random_treap(self) -> Tuple(Treap, set):
+    def get_random_treap(self) -> Tuple[Treap, set]:
         """ Utility method to randomly generate a Treap"
         """
         # first, construct an empty Treap
