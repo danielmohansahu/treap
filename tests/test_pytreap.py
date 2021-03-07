@@ -144,8 +144,3 @@ class TestTreap(unittest.TestCase):
         # return the generated structure
         return (treap, used_keys)
 
-if __name__ == "__main__":
-    # seed random number generator
-    random.seed()
-    # run all tests
-    unittest.main()
