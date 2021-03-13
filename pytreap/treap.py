@@ -16,8 +16,8 @@ class Treap:
 
     def __init__(self) -> None:
         # default instantiation creates an empty treap
+        self._root = None
         self._nodes = []
-        self._used_keys = set()
 
     def insert(self, key: str, priority: Union[int, None] = None) -> None:
         """ Insert a new key (and optionally a priority).
@@ -27,19 +27,22 @@ class Treap:
             priority: An optional integer value; if None this is randomly generated.
         """
         # make sure this key hasn't been used previously
-        if key in self._used_keys:
+        if self.search(key):
             raise AssertionError("Key {} already in use.".format(key))
 
         # make sure the given priority is good or generate our own    
         if priority is not None and priority < 0:
             raise AssertionError("Priority must be greater than zero.")
-        else:
+        elif priority is None:
             priority = random.randint(0, 1000)
    
-        # @TODO actually insert; for now just constructing / appending
+        # construct node object and insert
         node = Node(key, priority)
+        self._insert(node)
 
-        self._used_keys.add(key)
+        # save this node
+        if self._root is None:
+            self._root = node
         self._nodes.append(node)
 
     def search(self, key: str) -> bool:
@@ -53,10 +56,51 @@ class Treap:
         """
         return False
 
+    def _insert(self, node):
+        # Internal method to perform an insert function while maintaining treap properties
+        # This operation is accomplished in two steps:
+        # 1) Perform normalal binary tree insert
+        # 2) Reorder tree to ensure key priorities are descending
+
+        # first, find an empty leaf and insert
+        current = self._root
+        while current is not None:
+            if node.key > current.key:
+                if not current.right:
+                    # insert as the right leaf here
+                    current.right = node
+                    node.parent = current
+                    break
+                else:
+                    current = current.right
+            else:
+                if not current.left:
+                    # insert as the left node here
+                    current.left = node
+                    node.parent = current
+                    break
+                else:
+                    current = current.left
+
+        # next we need to re-prioritize the tree
+        # @TODO
+
+    def display(self):
+        """ Print out the current treap to stdout.
+
+        Credit: https://stackoverflow.com/questions/34012886/print-binary-tree-level-by-level-in-python
+        """
+        def _display(node, level):
+            if node is not None:
+                _display(node.right, level+1)
+                print("\t" * level + "-> {} ({})".format(node.key, node.priority))
+                _display(node.left, level+1)
+
+        _display(self._root, 0)
+
     def __len__(self) -> int:
         # return the current size of the treap
         return len(self._nodes)
 
     def __iter__(self):
         return iter(self._nodes)
-
