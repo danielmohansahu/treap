@@ -5,8 +5,103 @@
 import random
 import pytreap
 
+def is_ordered(treap):
+    """ Utility to check that every node in the given Treap satisfies the following:
+    Rules:
+     - if v is a child of u, then v.priority <= u.priority
+     - if v is a left child of u, then v.key < u.key
+     - if v is a right child of u, then v.key > u.key
+    """
+    # iterate through all nodes in the heap
+    success = True
+    for node in treap:
+        # break early if we're already borked
+        if not success:
+            break
+
+        # check parent (if not root)
+        if node != treap.root:
+            success = success and (node.priority < node.parent.priority)
+        # check all left and right. All are optional, technically
+        if node.left:
+            success = success and (node.key > node.left.key)
+        if node.right:
+            success = success and (node.key < node.right.key)
+    return success
+
+
 if __name__ == "__main__":
+    # seed random priorities
     random.seed()
 
-    print("Hello World.")
+    ###############################################################################################
+    ##################################### Part #3 #################################################
+    ###############################################################################################
+    statement = """
+    Use TreapInsert to build a treap using uppercase letters as keys, received in the
+    following order:
+
+    {'Z','Y','X','W','V','Q','U','P','S','R','K','J','G','B',
+    'F','C','M','D','H','I','L','A','N','O','T','E'}
+    
+    Use randomly generated treap priorities for each letter.
+
+    Verify that your treap indeed satisfies the binary search tree and heap priorities.
+    """
+    print("Step #3 Problem Statement: \n{}".format(statement))
+
+    
+    ###############################################################################################
+    ##################################### Part #4 #################################################
+    ###############################################################################################
+    statement="""
+    Write a program that will read the file “textbook.txt” character by character, which
+    contains the preface of your textbook repeated several times. For each uppercase
+    character (“A-Z”) that is read, use TreapSearch function to search your treap for that
+    character (which should always find a match). For each lowercase character (“a-z”) that
+    is read, convert it to uppercase and then use TreapSearch function to search your
+    treap (again, it should always find a match). Skip all other characters that are read.
+    Measure the total time it takes for searching all letters in the file.
+    
+    Run your program 5 times to get 5 measurement values, and then calculate the average
+    of your measurements.
+    """
+    print("Step #4 Problem Statement: \n{}".format(statement))
+
+
+    ###############################################################################################
+    ##################################### Part #5 #################################################
+    ###############################################################################################
+    statement="""
+    Repeat steps 3 and 4 above, using the following priorities when generating the treap,
+    instead of random priorities. These priorities roughly correspond to average frequency
+    of each letter in English. When generating the treap, the characters should still be
+    received in the order specified in step 3.
+
+    Characters: A,B, C, D, E, F,G, H, I, J,K, L, M, N, O, P,Q, R, S, T, U,V,W,X,Y,Z
+    Priorities: 24,7,14,17,26,10,8,18,22,4,5,16,13,19,23,12,2,20,21,25,15,6,11,3,9,1
+
+    Run your program 5 times and calculate the average of your time measurements as in
+    step 4. Does using priorities corresponding to letter frequency improve the running
+    time?
+    """
+    print("Step #5 Problem Statement: \n{}".format(statement))
+
+
+    ###############################################################################################
+    ##################################### Part #6 #################################################
+    ###############################################################################################
+    statement="""
+    Repeat steps 3 and 4 above, without using any priorities when generating the treap,
+    thus generating a simple binary search tree. Depending on your implementation, one
+    way to do this may be assigning the same priority to all characters when calling the
+    TreapInsert function. When generating the tree, the characters should still be
+    received in the order specified in step 3.
+
+    Run your program 5 times and calculate the average of your time measurements as in
+    steps 4 and 5. Does using treaps improve the running time compared to a binary search
+    tree?
+    """
+    print("Step #6 Problem Statement: \n{}".format(statement))
+
 
