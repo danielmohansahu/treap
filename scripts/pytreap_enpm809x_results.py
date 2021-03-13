@@ -52,7 +52,7 @@ def read_and_search(treap, data):
         TIMED_COUNT,
         len(data)))
 
-if __name__ == "__main__":
+def main():
     # seed random priorities
     random.seed()
 
@@ -181,3 +181,6 @@ if __name__ == "__main__":
 
     # time the resulting search with test data
     read_and_search(binary_treap, test_data_cleaned)
+
+if __name__ == "__main__":
+    main()
