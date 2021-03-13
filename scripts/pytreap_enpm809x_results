@@ -10,7 +10,7 @@ from pkg_resources import resource_filename
 from pytreap.treap import Treap
 
 # handy global variables
-TIMED_COUNT=5
+TIMED_COUNT=50
 
 def is_ordered(treap):
     """ Utility to check that every node in the given Treap satisfies the following:
@@ -37,11 +37,20 @@ def is_ordered(treap):
 def read_and_search(treap, data):
     """ Search for each character in the given file (non-case-sensitive) in the given Treap.
 
+    Repeats this operation TIMED_COUNT times and prints out the average time.
+
     Raises:
         AssertionError: If a character (A-Z) is not found.
     """
-    for c in data:
-        assert(treap.search(c), "Treap couldn't find expected key: '{}'.".format(c))
+    # define core search method
+    def _search():
+        for c in data:
+            assert(treap.search(c), "Treap couldn't find expected key: '{}'.".format(c))
+
+    print("Treap took {:.3f} seconds (average of {} tests) to search for {} characters.\n".format(
+        timeit.timeit(_search, number=TIMED_COUNT)/TIMED_COUNT,
+        TIMED_COUNT,
+        len(data)))
 
 if __name__ == "__main__":
     # seed random priorities
@@ -58,6 +67,9 @@ if __name__ == "__main__":
     #  - convert (a-z) to uppercase
     test_data_cleaned = [c.upper() for c in test_data if c in string.ascii_letters]
 
+    # define keys here, for convenience
+    keys = ('Z','Y','X','W','V','Q','U','P','S','R','K','J','G','B',
+            'F','C','M','D','H','I','L','A','N','O','T','E')
     ###############################################################################################
     ##################################### Part #3 #################################################
     ###############################################################################################
@@ -78,8 +90,6 @@ if __name__ == "__main__":
     uniform_treap = Treap()
 
     # add all the keys
-    keys = ('Z','Y','X','W','V','Q','U','P','S','R','K','J','G','B',
-            'F','C','M','D','H','I','L','A','N','O','T','E')
     for key in keys:
         uniform_treap.insert(key)
 
@@ -110,10 +120,7 @@ if __name__ == "__main__":
     print("Step #4 Problem Statement: \n{}".format(statement))
 
     # test our speed against the Treap created in step #3
-    print("Uniform Treap took {:.3f} seconds (average of {} tests) to search for {} characters.\n".format(
-        timeit.timeit(lambda: read_and_search(uniform_treap, test_data_cleaned), number=TIMED_COUNT)/TIMED_COUNT,
-        TIMED_COUNT,
-        len(test_data_cleaned)))
+    read_and_search(uniform_treap, test_data_cleaned)
 
     ###############################################################################################
     ##################################### Part #5 #################################################
@@ -133,6 +140,15 @@ if __name__ == "__main__":
     """
     print("Step #5 Problem Statement: \n{}".format(statement))
 
+    # construct and add keys and priorities to this new Treap
+    priorities = (24,7,14,17,26,10,8,18,22,4,5,16,13,19,23,12,2,20,21,25,15,6,11,3,9,1)
+
+    heuristic_treap = Treap()
+    for k,p in zip(keys, priorities):
+        heuristic_treap.insert(k,p)
+
+    # time the resulting search with test data
+    read_and_search(heuristic_treap, test_data_cleaned)
 
     ###############################################################################################
     ##################################### Part #6 #################################################
@@ -150,4 +166,10 @@ if __name__ == "__main__":
     """
     print("Step #6 Problem Statement: \n{}".format(statement))
 
+    # construct and add keys to this new Treap
+    binary_treap = Treap()
+    for key in keys:
+        binary_treap.insert(key, 1)
 
+    # time the resulting search with test data
+    read_and_search(binary_treap, test_data_cleaned)
