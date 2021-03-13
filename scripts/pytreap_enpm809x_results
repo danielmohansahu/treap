@@ -10,7 +10,7 @@ from pkg_resources import resource_filename
 from pytreap.treap import Treap
 
 # handy global variables
-TIMED_COUNT=50
+TIMED_COUNT=20
 
 def is_ordered(treap):
     """ Utility to check that every node in the given Treap satisfies the following:
@@ -147,6 +147,10 @@ if __name__ == "__main__":
     for k,p in zip(keys, priorities):
         heuristic_treap.insert(k,p)
 
+    # print out the resulting treap
+    print("Heuristic Treap:")
+    heuristic_treap.display()
+
     # time the resulting search with test data
     read_and_search(heuristic_treap, test_data_cleaned)
 
@@ -170,6 +174,10 @@ if __name__ == "__main__":
     binary_treap = Treap()
     for key in keys:
         binary_treap.insert(key, 1)
+
+    # print out the resulting treap
+    print("Binary Tree Treap:")
+    binary_treap.display()
 
     # time the resulting search with test data
     read_and_search(binary_treap, test_data_cleaned)
