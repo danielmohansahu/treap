@@ -99,9 +99,9 @@ class TestTreap(unittest.TestCase):
         """
     
         # iterate through all nodes in the heap
-        for i,node in enumerate(treap):
+        for node in treap:
             # check parent if not root
-            if i != 0:
+            if node != treap.root:
                 self.assertLessEqual(node.priority, node.parent.priority)
 
             # check all left and right. All are optional, technically
