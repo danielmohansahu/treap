@@ -160,10 +160,10 @@ class Treap:
                 print("\t" * level + "-> {}".format(node))
                 _display(node.left, level+1)
 
-        print("-"*30)
+        print("-"*80)
         print("Treap: ")
         _display(self.root, 0)
-        print("-"*30)
+        print("-"*80)
 
     def __len__(self) -> int:
         # return the current size of the treap
