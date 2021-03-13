@@ -8,8 +8,8 @@ setup(name='pytreap',
       author='Daniel M. Sahu',
       author_email='danielmohansahu@gmail.com',
       url='https://github.com/danielmohansahu/treap',
-      scripts=['scripts/run_tests', 'scripts/enpm809x'],
+      scripts=['scripts/pytreap_run_tests', 'scripts/pytreap_enpm809x_results'],
       data_files=[("scripts",["scripts/textbook.txt"])],
       requires=["typing", "unittest"],
-      packages=['pytreap']
+      packages=['pytreap', 'pytreap.tests']
      )
