@@ -45,7 +45,8 @@ def read_and_search(treap, data):
     # define core search method
     def _search():
         for c in data:
-            assert(treap.search(c), "Treap couldn't find expected key: '{}'.".format(c))
+            if not(treap.search(c)):
+                raise RuntimeError("Treap couldn't find expected key: '{}'.".format(c))
 
     print("Treap took {:.3f} seconds (average of {} tests) to search for {} characters.\n".format(
         timeit.timeit(_search, number=TIMED_COUNT)/TIMED_COUNT,
