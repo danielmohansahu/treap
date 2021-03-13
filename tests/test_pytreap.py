@@ -108,9 +108,7 @@ class TestTreap(unittest.TestCase):
             if node.left:
                 self.assertGreater(node.key, node.left.key)
             if node.right:
-                self.asserLess(node.key, node.right.key)
-
-
+                self.assertLess(node.key, node.right.key)
 
     def get_random_treap(self) -> Tuple[Treap, set]:
         """ Utility method to randomly generate a Treap"
