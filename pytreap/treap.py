@@ -45,17 +45,6 @@ class Treap:
             self._root = node
         self._nodes.append(node)
 
-    def search(self, key: str) -> bool:
-        """ Search for the given key in the treap and return True if found.
-
-        Args:
-            key: The string key to search for.
-
-        Returns:
-            Boolean indicating success or failure.
-        """
-        return False
-
     def _insert(self, node):
         # Internal method to perform an insert function while maintaining treap properties
         # This operation is accomplished in two steps:
@@ -84,6 +73,31 @@ class Treap:
 
         # next we need to re-prioritize the tree
         # @TODO
+
+    def search(self, key: str) -> bool:
+        """ Search for the given key in the treap and return True if found.
+
+        Args:
+            key: The string key to search for.
+
+        Returns:
+            Boolean indicating success or failure.
+        """
+
+        # traverse tree looking for a matching key
+        found = False
+        current = self._root
+        while current is not None:
+            # check if this node matches our key and/or which child tree to check
+            if current.key == key:
+                found = True
+                break
+            elif key < current.key:
+                current = current.left
+            else:
+                current = current.right
+        # return result
+        return found
 
     def display(self):
         """ Print out the current treap to stdout.
