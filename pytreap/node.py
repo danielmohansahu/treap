@@ -21,3 +21,7 @@ class Node:
         self.key = key
         self.priority = priority
 
+    def __str__(self):
+        # representation is key (priority)
+        return "{} ({})".format(self.key, self.priority)
+
