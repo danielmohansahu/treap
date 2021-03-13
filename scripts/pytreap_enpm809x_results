@@ -1,0 +1,12 @@
+#!/usr/bin/env python
+""" Run full suite of assignments for ENPM809X Project.
+""" 
+
+import random
+import pytreap
+
+if __name__ == "__main__":
+    random.seed()
+
+    print("Hello World.")
+
