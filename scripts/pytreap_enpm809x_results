@@ -3,7 +3,7 @@
 """ 
 
 import random
-import pytreap
+from pytreap.treap import Treap
 
 def is_ordered(treap):
     """ Utility to check that every node in the given Treap satisfies the following:
@@ -13,22 +13,19 @@ def is_ordered(treap):
      - if v is a right child of u, then v.key > u.key
     """
     # iterate through all nodes in the heap
-    success = True
     for node in treap:
-        # break early if we're already borked
-        if not success:
-            break
-
         # check parent (if not root)
-        if node != treap.root:
-            success = success and (node.priority < node.parent.priority)
-        # check all left and right. All are optional, technically
-        if node.left:
-            success = success and (node.key > node.left.key)
-        if node.right:
-            success = success and (node.key < node.right.key)
-    return success
-
+        if node != treap.root and (node.priority > node.parent.priority):
+            print("Node {} and parent ({}) have mismatched priorities.".format(node, node.parent))
+            return False
+        # check left and right. All are optional, technically
+        if node.left and (node.key < node.left.key):
+            print("Node {} and left child ({}) have mismatched keys.".format(node, node.left))
+            return False
+        if node.right and (node.key > node.right.key):
+            print("Node {} and right child ({}) have mismatched keys.".format(node, node.right))
+            return False
+    return True
 
 if __name__ == "__main__":
     # seed random priorities
@@ -50,6 +47,23 @@ if __name__ == "__main__":
     """
     print("Step #3 Problem Statement: \n{}".format(statement))
 
+    # construct the desired treap (priorities are generated randomly implicitly)
+    treap = Treap()
+
+    # add all the keys
+    keys = ('Z','Y','X','W','V','Q','U','P','S','R','K','J','G','B',
+            'F','C','M','D','H','I','L','A','N','O','T','E')
+    for key in keys:
+        treap.insert(key)
+
+    # print out the resulting treap
+    treap.display()
+
+    # check that this satisfies our conditions
+    if is_ordered(treap):
+        print("\nSUCCESS: Resulting treap satisfies our conditions.\n")
+    else:
+        print("\nERROR: Resulting treap is not ordered properly. Something went wrong.\n")
     
     ###############################################################################################
     ##################################### Part #4 #################################################
