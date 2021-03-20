@@ -142,11 +142,14 @@ def main():
     print("Step #5 Problem Statement: \n{}".format(statement))
 
     # construct and add keys and priorities to this new Treap
+    heuristic_keys = ('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z')
     priorities = (24,7,14,17,26,10,8,18,22,4,5,16,13,19,23,12,2,20,21,25,15,6,11,3,9,1)
+    heuristic_key_map = {k:p for k,p in zip(heuristic_keys, priorities)}
 
+    # construct a heuristic Treap, still inserting keys in the order from the previous problem
     heuristic_treap = Treap()
-    for k,p in zip(keys, priorities):
-        heuristic_treap.insert(k,p)
+    for k in keys:
+        heuristic_treap.insert(k,heuristic_key_map[k])
 
     # print out the resulting treap
     print("Heuristic Treap:")
